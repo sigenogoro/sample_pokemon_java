@@ -18,6 +18,8 @@ class Main {
       if(hero.getHp() <= 0 || emeny.getHp() <= 0){
         System.out.println("バトル終了");
         break;
+      }else{
+        System.out.println("次のターンへ進みます！");
       }
     }
   }
