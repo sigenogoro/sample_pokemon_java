@@ -5,7 +5,7 @@ class Main {
     String[] names = {"ピカチュウ","ゼニガメ"};
     System.out.println("あなたのポケモンは："+ names[0]);
     Hero hero = new Hero(names[0]);
-    Enemy emeny = new Enemy(names[1]);
+    Enemy enemy = new Enemy(names[1]);
     System.out.println("バトルを始めます!!");
 
     while(true){
@@ -13,15 +13,22 @@ class Main {
       Scanner scannerDamage = new Scanner(System.in);
       System.out.print("あなたはどの技を使いますか?(番号を入力ください):");
       int damage = hero.decisionMove(scannerDamage.nextInt());
+      int selfDamage = enemy.enemyMove();
+      enemy.setHp(damage);
+      hero.setHp(selfDamage);
 
-      hero.setHp(damage);
-      if(hero.getHp() <= 0 || emeny.getHp() <= 0){
-        System.out.println("バトル終了");
+      if(enemy.getHp() <= 0){
+        System.out.println("ゼニガメのHPがゼロになった！");
+        System.out.println("あなたの勝利です");
         break;
-      }else{
-        System.out.println("次のターンへ進みます！");
+      }else if(hero.getHp() <= 0){
+        System.out.println("ピカチュウのHPがゼロになった！！");
+        System.out.println("あなたの負けです");
+        break;
       }
+
     }
+    System.out.println("バトル終了します。");
   }
 
 }
