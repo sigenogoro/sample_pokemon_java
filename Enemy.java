@@ -1,42 +1,49 @@
+import java.util.Arrays;
 import java.util.Random;
 
-class Enemy{
-    private String name;
-    private int hp = 250;
-    private String[] moves = {"あわ","体当たり","鉄壁","水の波動"};
-    private String[] details = {"水タイプの技","ノーマルタイプの技","自分の防御力を高める","水タイプの技"};
-    private int[] moveDamage = {80, 50, 0, 80};
+
+class Enemy extends PokemonInfo{
+
+    protected int hp = 200;
+    public String[] moves = {"10万ボルト","アイアンテール", "しっぽをふる", "カミナリ"};
+    protected String[] details = {"電気タイプの技","ノーマルタイプの技","相手の防御力を落とす","電気タイプの技"};
+    protected int[] moveDamage = {80, 50, 0, 80};
+    protected int defensePower = 40;
+
+
 
     Enemy(String name){
-        this.name = name;
-        this.moveInfo();
-    }
-
-    public void moveInfo(){
-        System.out.println("相手のポケモンは："+ this.name);
-        for(int i=0;i < moves.length;i++){
-            System.out.println("["+i+"]"+ " " + moves[i]+ "：" + details[i] + " " +"威力：" + moveDamage[i]);
-        }
+        super(name);
     }
 
     public void setHp(int damage){
-        this.hp -= damage;
-        System.out.println("ゼニガメは"+ damage + "のダメージを食らった");
-        System.out.println("ゼニガメの残りHPは" + this.getHp() + "です");
+        if(damage == 0){
+            this.setDownDefansePower();
+            System.out.println("ゼニガメの防御力が10下がった！");
+        }else{
+            this.hp -= (damage - defensePower);
+            System.out.println("ゼニガメは"+ damage + "のダメージを食らった");
+        }
+        System.out.println("ゼニガメの残りHPは" + this.hp + "です");
     }
 
-    public int getHp(){
-        if(this.hp >= 0){
-            return this.hp;
-        }else{
-            return 0;
-        }
-    }
 
     public int enemyMove(){
         Random rand = new Random();
         int num = rand.nextInt(3);
+        System.out.println(num);
+        if(num == 2){
+            this.setUpDefansePower();
+        }
         return this.moveDamage[num];
+    }
+
+    public void setUpDefansePower(){
+        this.defensePower += 10;
+    }
+
+    public void setDownDefansePower(){
+        this.defensePower -= 10;
     }
 
 }
